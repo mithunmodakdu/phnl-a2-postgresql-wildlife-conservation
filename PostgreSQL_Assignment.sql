@@ -73,4 +73,7 @@ SELECT r.name, COUNT(s.sighting_id) AS "total_sightings" FROM rangers AS r
   ORDER BY r.name;
   
   
- 
+-- Problem 5
+SELECT sp.common_name FROM species AS sp 
+  FULL OUTER JOIN sightings AS s ON sp.species_id = s.species_id
+  WHERE s.species_id IS NULL;
