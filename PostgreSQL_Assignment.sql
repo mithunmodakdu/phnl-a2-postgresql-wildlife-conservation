@@ -52,10 +52,12 @@ INSERT INTO sightings (species_id, ranger_id, location, sighting_time, notes)
     (1, 2, 'Snowfall Pass ', '2024-05-18 18:30:00', NULL);
 
 
+
 -- Problem 1
 INSERT INTO rangers(name, region)
   VALUES
     ('Derek Fox', 'Coastal Plains');
+
 
 -- Problem 2
 SELECT COUNT(DISTINCT species_id) AS "unique_species_count" FROM sightings;
@@ -78,9 +80,36 @@ SELECT sp.common_name FROM species AS sp
   FULL OUTER JOIN sightings AS s ON sp.species_id = s.species_id
   WHERE s.species_id IS NULL;
 
+
 -- Problem 6
 SELECT sp.common_name, s.sighting_time, r.name FROM sightings AS s
-JOIN species AS sp ON s.species_id = sp.species_id
-JOIN rangers AS r ON s.ranger_id = r.ranger_id
-ORDER BY s.sighting_time DESC
-LIMIT 2;
+  JOIN species AS sp ON s.species_id = sp.species_id
+  JOIN rangers AS r ON s.ranger_id = r.ranger_id
+  ORDER BY s.sighting_time DESC
+  LIMIT 2;
+
+
+-- Problem 7
+UPDATE species
+  SET conservation_status = 'Historic'
+  WHERE EXTRACT(YEAR FROM discovery_date) < 1800;
+
+
+-- Problem 8
+SELECT s.sighting_id, td.time_of_day FROM sightings AS s
+  JOIN (
+    VALUES
+    ('Morning', 0, 12),
+    ('Afternoon', 12, 17),
+    ('Evening', 17, 24)
+  ) AS td(time_of_day, start_hour, end_hour)
+  ON EXTRACT(HOUR FROM s.sighting_time) >= td.start_hour
+  AND EXTRACT(HOUR FROM s.sighting_time) < td.end_hour;
+
+
+-- Problem 9
+DELETE FROM rangers 
+WHERE ranger_id = (SELECT r.ranger_id FROM rangers AS r 
+  FULL OUTER JOIN sightings AS s ON r.ranger_id = s.ranger_id
+  WHERE s.ranger_id IS NULL);
+
