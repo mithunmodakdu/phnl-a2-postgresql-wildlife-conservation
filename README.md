@@ -91,3 +91,16 @@ CREATE TABLE enrollments (
     অন্যদিকে **VARCHAR(n)** ব্যবহার করলে **যতটুকু ইনপুট, ততটুকুই স্টোরেজ** নেয়।
 
 
+
+## Explain the purpose of the WHERE clause in a SELECT statement.
+SQL (Structured Query Language) এ  SELECT স্টেটমেন্ট দিয়ে আমরা ডেটাবেজ থেকে ডেটা আনতে পারি। কিন্তু আমরা যদি  নির্দিষ্ট কিছু শর্ত অনুযায়ী ডেটা আনতে চাই, তখন WHERE ক্লজ ব্যবহার করতে হবে। WHERE ক্লজ SQL স্টেটমেন্টে এমন শর্ত নির্ধারণ করে দেয়, যার ভিত্তিতে রেকর্ডগুলো ফিল্টার করে আনা হবে। এর প্রধান সুবিধা হলো শুধুমাত্র প্রয়োজনীয় রেকর্ডগুলো পাওয়া যায়।  
+
+উদাহরণ-১: শুধু যাদের বয়স ১৮ এর কম, তাদের নাম আনার জন্য
+<pre>
+SELECT name FROM students
+WHERE age < 18; </pre>
+
+উদাহরণ-২: শুধু সেই প্রোডাক্টগুলো আনার জন্য যেগুলোর দাম ৫০০ টাকার বেশি এবং ক্যাটাগরি ‘Electronics’ 
+<pre>
+SELECT * FROM products
+WHERE price > 500 AND category = 'Electronics'; </pre>
